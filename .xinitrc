@@ -3,6 +3,9 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 
+//IDEA 灰屏解决方案
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 picom  -CGb &
 
 fcitx &
