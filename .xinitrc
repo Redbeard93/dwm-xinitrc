@@ -1,3 +1,7 @@
+# Set Chinese locale
+export LANG=zh_CN.UTF-8
+export LANGUAGE=zh_CN:en_US
+
 # !/bin/sh (from xorg-xinit)
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
@@ -29,10 +33,6 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
     unset f
 fi
 
-# Set Chinese locale
-export LANG=zh_CN.UTF-8
-export LANGUAGE=zh_CN:en_US
-
 # Set fcitx5
 export GTK_IM_MODULE=fcitx5
 export QT_IM_MODULE=fcitx5
@@ -58,31 +58,7 @@ while true; do
 done
 
 # Status bar1
-while true; do
-
-BA="$( acpi -b | awk '{print $4}' | tr -d ',' )"
-VO=$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')
-LOCALTIME=$(date +'D:%Y-%m-%d T:%H:%M:%S')
-IP=$(for i in `ip r`; do echo $i; done | grep -A 1 src | tail -n1)
-MEMFREE=$(free -h|awk '{print $7}'|awk 'NR==2')
-
-if acpi -a | grep off-line > /dev/null
-then
-
-xsetroot -name "IP:$IP RAM:$MEMFREE VOL:$VO BAT:$BA $LOCALTIME"
-
-else
-
-xsetroot -name "IP:$IP RAM:$MEMFREE VOL:$VO PLUG$BA $LOCALTIME"
-
-fi
-
-sleep 1
-
-done &
-
-# Status bar2
-dwmstatus 2>&1 >/dev/null &
+slstatus &
 
 #Execute DWM
 exec dwm
